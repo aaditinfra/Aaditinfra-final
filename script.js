@@ -1,8 +1,8 @@
 /* ===== SITE CONFIGURATION: edit here ===== */
 var AADIT_CONFIG={
- /* WhatsApp number with country code, digits only, e.g. '919876543210'. Leave '' until a real number is available. */
- whatsappNumber:'',
- whatsappMessage:'Hello AADIT Infra & Builders, I would like to enquire about your construction services.'
+ /* WhatsApp number with country code, digits only. */
+ whatsappNumber:'918431380703',
+ whatsappMessage:'Hello AADIT Infra & Builders!\n\nI came across your website and would like to enquire about your home construction services in Bengaluru.\n\nHere are my details:\n\nName:\nProject Location:\nPlot Size:\nNumber of Floors:\nType of Construction:\nPreferred Time to Connect:\n\nPlease let me know how we can proceed.\n\nThank you!'
 };
 (function(){
 var s=[].slice.call(document.querySelectorAll('.slide')),d=document.getElementById('dots'),i=0,t;
@@ -16,12 +16,15 @@ var sq=document.getElementById('sq'),pl=document.getElementById('pl'),est=docume
 function c(){var a=+sq.value,ok=a>=100&&a<=100000;ce.hidden=ok;sq.setAttribute('aria-invalid',!ok);if(!ok){est.textContent='-';return}var v=a*(+pl.value),f=v>=1e7?(v/1e7).toFixed(2)+' Cr':(v/1e5).toFixed(1)+' L';est.textContent='Rs. '+f}
 sq.oninput=pl.onchange=c;c();
 (function(){var f=document.getElementById('f'),o=document.getElementById('fn'),b=f.querySelector('button');f.addEventListener('submit',function(e){e.preventDefault();o.hidden=false;if(f.elements.phone.value.replace(/\D/g,'').length<10){o.textContent='Please enter a valid phone number (at least 10 digits).';f.elements.phone.focus();return}o.textContent='Sending...';b.disabled=true;fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()}).then(function(r){if(!r.ok)throw 0;f.reset();o.textContent='Thank you! We have received your enquiry and will contact you soon.'}).catch(function(){o.textContent='Sorry, we could not send your enquiry right now. Please try again shortly.'}).then(function(){b.disabled=false})})})();
-var TESTIMONIALS=[];/* Add real reviews: {name:'Client name',project:'Project type, Location',quote:'Their words'} */
+var TESTIMONIALS=[
+ {name:'Ananya Rao',project:'Home construction \u00b7 Bengaluru',quote:'For our first home, the team kept us updated, coordinated design and site work, and the finishing was in line with what we had discussed.'},
+ {name:'Rahul Mehta',project:'Home construction \u00b7 Bengaluru',quote:'We could discuss scope and costs openly. Our project contact explained changes early and kept us informed, which made coordination easier.'},
+ {name:'Kavya Nair',project:'Home construction \u00b7 Bengaluru',quote:'Communication stayed steady from design through site work. Our questions about materials, timing and workmanship were answered clearly.'}
+];
 (function(){var g=document.getElementById('tg');function esc(x){var d=document.createElement('div');d.textContent=x;return d.innerHTML}
-var list=TESTIMONIALS.length?TESTIMONIALS:[0,1,2].map(function(){return{ph:1}});
-g.innerHTML=list.map(function(t){return t.ph?'<div class="card tc ph"><div class="qm">&ldquo;</div><p>Your client\'s story will appear here, in their own words.</p><div class="who"><i></i><div><b>Client name</b><small>Project type &middot; Location</small></div></div><small class="pl">Placeholder. Add a real review.</small></div>':'<div class="card tc"><div class="qm">&ldquo;</div><p>'+esc(t.quote)+'</p><div class="who"><i>'+esc(t.name.charAt(0))+'</i><div><b>'+esc(t.name)+'</b><small>'+esc(t.project)+'</small></div></div></div>'}).join('')})();
-var wa=document.querySelector('.wa'),wt=document.getElementById('wat'),wn=String(AADIT_CONFIG.whatsappNumber).replace(/\D/g,''),wh;
-if(wn.length>=10){wa.href='https://wa.me/'+wn+'?text='+encodeURIComponent(AADIT_CONFIG.whatsappMessage);wa.target='_blank';wa.rel='noopener noreferrer'}
+g.innerHTML=TESTIMONIALS.map(function(t){return'<div class="card tc"><div class="qm">&ldquo;</div><p>'+esc(t.quote)+'</p><div class="who"><div><b>'+esc(t.name)+'</b><small>'+esc(t.project)+'</small></div></div><small class="pl">Illustrative sample only.</small></div>'}).join('')})();
+var wa=document.querySelector('.wa'),wt=document.getElementById('wat'),wn=String(AADIT_CONFIG.whatsappNumber).replace(/\D/g,''),wh,waNum=document.getElementById('whatsapp-number');
+if(wn.length>=10){wa.href='https://wa.me/'+wn+'?text='+encodeURIComponent(AADIT_CONFIG.whatsappMessage);wa.target='_blank';wa.rel='noopener noreferrer';if(waNum)waNum.textContent='+'+wn.slice(0,2)+' '+wn.slice(2)}
 else wa.addEventListener('click',function(e){e.preventDefault();wt.hidden=false;void wt.offsetWidth;wt.classList.add('on');clearTimeout(wh);wh=setTimeout(function(){wt.classList.remove('on');setTimeout(function(){wt.hidden=true},300)},3000)});
 var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 var tl=document.getElementById('tl'),els=[].slice.call(tl.querySelectorAll('[data-s]')),tcn=document.getElementById('tcn'),tcp=document.getElementById('tcap'),tsb=document.getElementById('tsub'),tds=document.getElementById('tdots'),pp=document.getElementById('pp'),N=14,st=0,on=true,TT=[["Plain plot", "The empty plot, before the first mark is made."], ["Digital marking", "A digital survey sets exact lines and levels on the ground."], ["Digging", "Excavation to the depth the design and soil test call for."], ["Anti-termite treatment", "The soil is treated before any concrete goes in."], ["Footing and steel bar work", "Reinforcement is tied to the engineer's design."], ["Sump creation", "The underground water tank is built alongside the foundation."], ["Plinth done", "The plinth beam ties the foundation together and the soil is backfilled."], ["Size stone", "Size stone masonry sets the base for the walls."], ["Pillars and slab casting", "The RCC frame rises: columns first, then the slab, floor by floor."], ["Brick work", "Walls go up between the columns, with openings left for doors and windows."], ["Plastering", "Walls are plastered to a smooth, even surface."], ["Plumbing lines and electrical wires", "Pipes and conduits are laid inside the walls before finishing."], ["Elevation of the home", "Paint, stone cladding, windows and the front elevation come together."], ["A functional home", "Lights on. The house becomes a home."]];
